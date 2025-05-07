@@ -1,0 +1,28 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2758
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red47\green180\blue29;\red64\green11\blue217;
+}
+{\*\expandedcolortbl;;\csgray\c0;\cssrgb\c20241\c73898\c14950;\cssrgb\c32309\c18666\c88229;
+}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs38 \cf2 \CocoaLigature0 (base) 
+\f1\b \cf3 ntorres1@teachingserver
+\f0\b0 \cf2 :
+\f1\b \cf4 /media/Scratch8TB/CLG2023/ntorres1/Human_NUMTs
+\f0\b0 \cf2 $ cat README.txt \
+1. mkdir Human_NUMTs\
+2. wget https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz\
+3. wget https://ftp.ensembl.org/pub/release-110/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.chromosome.MT.fa.gz\
+4. gzip -d Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz\
+   gzip -d Homo_sapiens.GRCh38.dna.chromosome.MT.fa.gz    \
+5. makeblastdb -in Homo_sapiens.GRCh38.dna.primary_assembly.fa -dbtype nucl\
+6. blastn -num_threads 2 -query Homo_sapiens.GRCh38.dna.chromosome.MT.fa -db Homo_sapiens.GRCh38.dna.primary_assembly.fa -outfmt 6 -num_alignments 100 -out Mt_Hum_nuc.blast.out\
+7a. 183 matches;  wc -l Mt_Hum_nuc.blast.out > nuclear_mito_matches.txt\
+7b. 1; awk '$2=="MT"' Mt_Hum_nuc.blast.out > mito-mito_matches.txt\
+7c. awk '$4>=1000' Mt_Hum_nuc.blast.out |wc -l > nuclear_mito_1000bp_matches.txt\
+7d. awk '$3>="1000"' Mt_Hum_nuc.blast.out |wc -l > nuclear_mito_1000bp_75per_matches.txt\
+7e. awk '$4>="1000"' Mt_Hum_nuc.blast.out |awk '$3>="1000"' Mt_Hum_nuc.blast.out > nuclear_mito_1000bp_75per_matches_results.out\
+ \
+}
